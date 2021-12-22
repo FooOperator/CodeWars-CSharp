@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+// exercise: https://www.codewars.com/kata/52761ee4cffbc69732000738/train/csharp
 namespace Codewars_CSharp
 {
     public class GoodVsEvil
@@ -13,7 +13,7 @@ namespace Codewars_CSharp
             string goodTest = "0 0 0 0 0 10";
             string evilTest = "0 1 1 1 1 0 0";
 
-            var result = GoodVsEvil.MakeJudgement(goodTest, evilTest);
+            var result = MakeJudgement(goodTest, evilTest);
             Console.WriteLine(result);
         }
         public class UnitWorth

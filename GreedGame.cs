@@ -5,7 +5,7 @@ namespace Codewars_Sharp
     /// <summary>
     /// Greed Is Good is a game where dice are thrown. Each die has 6 sides. 
     /// <para>Sides 1 and 5 contribute to the score by 100 and 50 points respectively.</para>
-    /// <para>Trios of sides award 100 times their value.</para>
+    /// <para>Trios of sides award 100 times their value (except for side 1, which awards 10 times its value).</para>
     /// <para>Sides other than 1 and 5 can't contribute unless they're trios.</para>
     /// </summary>
     public class GreedGame
@@ -45,6 +45,8 @@ namespace Codewars_Sharp
 
             }
 
+            // this is a spaghetti fix
+            // looking for solutions
             if (equation.EndsWith(" + "))
             {
                 equation = equation.Substring(0, equation.Length - 3);
@@ -56,31 +58,30 @@ namespace Codewars_Sharp
                 IDynamicExpression e = context.CompileDynamic(equation);
 
                 score = (int)e.Evaluate();
-
             }
 
             return score;
         }
         private static string? DefineDieScore(KeyValuePair<int, int> keyValue)
         {
-            Func<int, bool> than3 = value => value >= 3;
-            int howManyPairs = keyValue.Value / 3;
+            Func<int, bool> largerOrEqualTo3 = value => value >= 3;
+            int howManyTrios = keyValue.Value / 3;
             string calculation = $"({keyValue.Key * 100} * {keyValue.Value / 3})";
 
             if (acceptableRange.Contains(keyValue.Key))
             {
-                if (than3(keyValue.Value))
+                if (largerOrEqualTo3(keyValue.Value))
                 {
                     return calculation;
                 }
             }
             else if (keyValue.Key == 5)
             {
-                calculation = $"({keyValue.Key * 10} * {keyValue.Value - (howManyPairs * 3)})";
-                if (than3(keyValue.Value))
+                calculation = $"({keyValue.Key * 10} * {keyValue.Value - (howManyTrios * 3)})";
+                if (largerOrEqualTo3(keyValue.Value))
                 {
                     int times100 = 0;
-                    foreach (int pair in Enumerable.Range(0, howManyPairs))
+                    foreach (int pair in Enumerable.Range(0, howManyTrios))
                     {
                         times100++;
                     }
@@ -90,11 +91,11 @@ namespace Codewars_Sharp
             }
             else if (keyValue.Key == 1)
             {
-                calculation = $"({keyValue.Key * 100} * {keyValue.Value - (howManyPairs * 3)})";
-                if (than3(keyValue.Value))
+                calculation = $"({keyValue.Key * 100} * {keyValue.Value - (howManyTrios * 3)})";
+                if (largerOrEqualTo3(keyValue.Value))
                 {
                     int times1000 = 0;
-                    foreach (int pair in Enumerable.Range(0, howManyPairs))
+                    foreach (int pair in Enumerable.Range(0, howManyTrios))
                     {
                         times1000++;
                     }

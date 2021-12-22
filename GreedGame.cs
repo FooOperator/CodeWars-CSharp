@@ -2,6 +2,9 @@
 
 namespace Codewars_Sharp
 {
+    // Exercise: https://www.codewars.com/kata/5270d0d18625160ada0000e4/train/csharp 
+    // Or rather, inspired by - since I can't use this solution as Flee is not available for this exercise.
+
     /// <summary>
     /// Greed Is Good is a game where dice are thrown. Each die has 6 sides. 
     /// <para>Sides 1 and 5 contribute to the score by 100 and 50 points respectively.</para>

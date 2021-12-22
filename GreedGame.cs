@@ -2,11 +2,22 @@
 
 namespace Codewars_Sharp
 {
+    /// <summary>
+    /// Greed Is Good is a game where dice are thrown. Each die has 6 sides. 
+    /// <para>Sides 1 and 5 contribute to the score by 100 and 50 points respectively.</para>
+    /// <para>Trios of sides award 100 times their value.</para>
+    /// <para>Sides other than 1 and 5 can't contribute unless they're trios.</para>
+    /// </summary>
     public class GreedGame
     {
         static ExpressionContext context = new ExpressionContext();
         static int[] acceptableRange = { 2, 3, 4, 6 };
 
+        /// <summary>
+        /// Transform an array of dice into a string that gets concatenated with members when appropriate and its treated as a mathmetical expression.
+        /// </summary>
+        /// <param name="dice">Collection of dice. Can be of any size.</param>
+        /// <returns></returns>
         public static int Score(int[] dice)
         {
             int score = 0;

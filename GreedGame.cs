@@ -14,14 +14,17 @@ namespace Codewars_Sharp
     public class GreedGame
     {
         static ExpressionContext context = new ExpressionContext();
-        static int[] acceptableRange = { 2, 3, 4, 6 };
-
+        static int[] sidesThatNeedToBeInTrios = { 2, 3, 4, 6 };
+        // used for the sake of simplicity.
+        // having numbers outside the range doesn't break the code, they are counted but ignored when it comes to the equation.
+        static int rangeMax = 6;
+        static int rangeMin = 1;
         /// <summary>
         /// Transform an array of dice into a string that gets concatenated with members when appropriate and its treated as a mathmetical expression.
         /// </summary>
         /// <param name="dice">Collection of dice. Can be of any size.</param>
         /// <returns></returns>
-        public static int Score(int[] dice)
+        private static int Score(int[] dice)
         {
             int score = 0;
             string equation = "";
@@ -65,13 +68,21 @@ namespace Codewars_Sharp
 
             return score;
         }
+        /// <summary>
+        /// Returns the sum of the amount of times a die side appears. Sides that don't belong inside the range are simply ignored.
+        /// </summary>
+        /// <param name="keyValue">Key is the side, Value is the amount of times it appears in the collection</param>
+        /// <returns>
+        ///     <para>Returns a string that will be concatenated and be treated as an equation</para>
+        ///     <para>Or returns null, having no effect on the equation.</para>
+        /// </returns>
         private static string? DefineDieScore(KeyValuePair<int, int> keyValue)
         {
             Func<int, bool> largerOrEqualTo3 = value => value >= 3;
             int howManyTrios = keyValue.Value / 3;
             string calculation = $"({keyValue.Key * 100} * {keyValue.Value / 3})";
 
-            if (acceptableRange.Contains(keyValue.Key))
+            if (sidesThatNeedToBeInTrios.Contains(keyValue.Key))
             {
                 if (largerOrEqualTo3(keyValue.Value))
                 {
@@ -108,5 +119,19 @@ namespace Codewars_Sharp
             }
             return null;
         }
+        public static void TestGreedGame()
+        {
+            Random random = new Random();
+            int[] randomDice = new int[5];
+            int length = randomDice.Length;
+            for (int i = 0; i < length; i++)
+            {
+                randomDice[i] = random.Next(rangeMin, rangeMax);
+            }
+            var result = Score(randomDice);
+            Console.WriteLine(result);
+        }
+
     }
+
 }
